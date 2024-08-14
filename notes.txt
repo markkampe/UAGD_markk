@@ -64,3 +64,19 @@
         4. drag a few Prefabs into the scene
             Play, walk around, see what happens when we bump into them
 
+    SUBMIT THROUGH GIT
+
+        I started with a clone of a fork of the template workspace
+        I created the project in the Unit 1 directory
+        When done with the Unit 1 assignments I:
+            git status
+            git add (everything but Libraries, Logs and Temp)
+            git commit, git/push
+
+        The result was 132MB ... similar to size of imported unitypackage
+
+        I then went to a new directory
+            git clone (new clone)
+            unityhub Add new project from disk
+            select that project
+            Play ... and it was all there
