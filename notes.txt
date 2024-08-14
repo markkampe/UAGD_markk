@@ -1,0 +1,66 @@
+1. Unity (Editor) Basics
+
+    1.2 I created the project with a simple name, and put it in the phase 1 directory,
+        which created the project under the phase 1 directory.  So I moved everything
+        deleted from the list, and re-added from disk.  Next time I will try to create
+        the project with same name in the top directory of the repo.
+
+    1.3 download IntroToUnity package, unzip
+        import into the project
+        open playground scene, import TMP Essentials
+
+    1.4 flythrough test
+  >>    2. right mouse button down to pan around the scene
+            scroll to move in/out
+        3. double click an item to select/frame it
+  >>       ALT+ left-click to orbit around framed object
+                right-click to move forward/back
+  >>    4. right-click +
+            WASD: fwd/back/left/right
+            QE: down/up
+            mouse to turn up/down/left/right
+  >>    5. F to frame (more convenient, takes me right there)
+            click+f (rather than double-click)
+
+    1.5 Scene Gizmo
+        1. click an axis to view from that axis
+            standard mouse controls to adjust viewpoint
+        2. perspective vs orthographic
+            ortho is unnatural, but much better for lining things up
+
+    1.6 Add GameObjcts to a new scene
+        1. rename and open the (provided) Empty Scene
+        2. create a plane
+        3. update Transform position to (0,0,0)
+           (or more>Reset)
+        4. create a cube
+        5. move it to (0,4,0)
+
+    1.7 Apply Materials
+        1. create Ground material, set Basemap color (to dark lawn green)
+        2. drag/drop that material to the plane (in the scene view)
+        3. create Cube material, set Basemap color, drag/drop to cube (in scene view)
+
+    1.8 Add physics and enter play mode
+        1. Play and observe the floating cube
+        2. select cube, add Rigidbody, Play and watch it fall
+        3. rotate it, Play and watch it tumble
+
+    1.9 Make more cubes using global & local coordinates
+        1. duplicate cube a few times
+           place others above original
+           some in global coordinates, some in local
+        2. Scale to adjust sizes
+            along Z axis
+            along Y axis
+  >>        click cube at center and scale entire cube
+
+    1.10 Add prefabs and other assets to scene
+        1. choose from Assets>_IntroToUnity>Prefabs>Characters
+            Play, walk around
+        2. replace Main Camera
+            Inspector > Main Camera > uncheck the enable box
+            Play, walk around, see view from just behind character
+        4. drag a few Prefabs into the scene
+            Play, walk around, see what happens when we bump into them
+
