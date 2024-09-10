@@ -14,6 +14,11 @@
         Edit>Project Settings>Player = desired program name
 
     0.4 record a video of play
+        Window > Package Manager > Unity Registry > Recorder: install
+        Window > General > Recorder
+            Add Recorder: Movie
+            Record
+            .webm will appear in Recording sub-directory of project
 
 1. Unity (Editor) Basics
 
@@ -38,6 +43,8 @@
             mouse to turn up/down/left/right
   >>    5. F to frame (more convenient, takes me right there)
             click+f (rather than double-click)
+
+        1.4 DELIVERABLE: Make a recording of this test
 
     1.5 Scene Gizmo
         1. click an axis to view from that axis
@@ -81,9 +88,15 @@
         4. drag a few Prefabs into the scene
             Play, walk around, see what happens when we bump into them
 
+        1.10 DELIVERABLE: Make a recording of this play
+
     SUBMIT AS RECORDING
 
-    SUBMIT THROUGH GIT
+        submit the two videos as 
+            student_flythrough.webm
+            student_physics.webm
+
+    SUBMIT THROUGH GIT ... doesn't make sense for this project
 
         I started with a clone of a fork of the template workspace
         I created the project in the Unit 1 directory
