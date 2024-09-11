@@ -121,11 +121,97 @@
 
     2.5 Create collectibles
 
+        2.5.2 create a PickUp GameObject
+            create Cube "PickUp", 
+                pos=<0,0.5,0>, rot=<45,45,45>, scale = <0.5,0.5,0.5>
+            dup Background material -> "PickUp"
+                rgb = <255,200,0>
+            drag it onto the PickUp object
+
+
+        2.5.3 script to rotate the collectible
+            PickUp>Add Component>New Script "Rotator", move into Scripts folder
+
+        2.5.4 turn PickUp object into a Prefab
+            [prefab: a template for a (collection of) well attributed GameObject(s),
+                     where any change to original is propagated to all instances]
+
+            >>> create folder Assets/Prefabs
+            >>> drag PickUp from hierarchy into that folder; rename "Original Prefab"
+            GameObject should turn blue in both Prefabs folder and Hierarchy
+
+        2.5.5 instantiate the prefabs around the play area
+            create empty GameObject "Pickup Parent"
+                pos = <0,0,0>
+            drag PickUp object under PickUp parent
+
+            switch to top-down view
+            duplicate and place several around the arena
+
+            [I found that I was dragging in the Y axis too, so had to go back
+             and reset all Y values to 0.5]
+
+        *** and I am still not sure that I understand what a Prefab is, and how
+            it differs from other GameObjects?
+
     2.6 Make object disappear when they collide w/Player sphere
+
+        2.6.2 disable PickUps w/PlayerController.OnTriggerEnter 
+        
+        2.6.3 select PickUp prefab, Add Tag, + "PickUp"
+              select PickUp prefab, Add Tag "PickUp"
+              confirm this tag has been set for all instantiated PickUps
+
+        2.6.4 PlayerController.OnTriggerEnter checks for this tag
+
+        2.6.5 Prefab/PickUp.prefab: isTrigger = true
+            conform this has been set for all Instantiated PickUps
+
+            test game and confirm that PickUps disappear when hit
+
+        2.6.6 add RidgidBody to PickUp prefab 
+            PickUp prefab>Add Component Rigidbody
+                use Gravity = false
+                Kinematic = true
+
+        [It is not obvious why we did this? To make box collisions work?]
 
     2.7 Keep score of collected objects
 
+        2.7.2 add score bumping to PlayerController.OnTriggerEnter
+
+        2.7.3 add a UI>Text>TextMeshPro to the Hierarchy
+            this will create Canvas > Text(TMPro) and EventSystem objects in Hierarchy
+            rename Text to CountText
+            select canvas, 2D, select CountText
+                Text Input = "Count Text" (place holder)
+                click Rect Transform > anchor preset icon
+                    Alt-Shift select top left anchor point
+                left Pos X=10, Pos Y=10
+
+            play and see this text now displayed
+
+        2.7.4 add score keeping
+            changes to PlayerController
+            add ref to TMPro to PlayerController script in Inspector
+            select EventSystem , click replace input subsystem to fix warning
+
+        2.7.5 create new You Win text object
+            under Canvas, create new TextMeshPro "WinText"
+                Text Input = "You Win!"
+                Vertex Colr = black
+                Font size = 32
+                alignment = center
+                Rect Transform.pos = <0,100>
+
+            add to PlayerController
+
+            set WinTextObject and numObjects in Inspector
+
     2.8 Implement AI-based enemy navigation
+
+        2.8.2 Package Manager> Unity Registry > AI Navigation ... Install
+
 
     2.9 Build and export the game
 

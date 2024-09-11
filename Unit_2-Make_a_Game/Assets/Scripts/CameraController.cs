@@ -3,8 +3,6 @@
  *
  * This script causes the camera to follow the player,
  *      from a fixed distance behind
- *
- * @author: Mark Kampe
  */
 using System.Collections;
 using System.Collections.Generic;
