@@ -19,9 +19,15 @@ public class CameraController : MonoBehaviour
         offset = transform.position - player.transform.position;
     }
 
-    // LateUpdate is called once per frame, AFTER all other Updates
+    /*
+     * LateUpdate is called once per frame, AFTER all other Updates
+     *
+     *	Note that Player may be destroyed if enemy catches him, 
+     *	     so we must check that player != null
+     */
     void LateUpdate() {
 	// move us to the corresponding place behind the player
-        transform.position = player.transform.position + offset;
+	if (player != null)
+            transform.position = player.transform.position + offset;
     }
 }

@@ -210,9 +210,73 @@
 
     2.8 Implement AI-based enemy navigation
 
-        2.8.2 Package Manager> Unity Registry > AI Navigation ... Install
+        2.8.2 install IA Navigation
+            Package Manager> Unity Registry > AI Navigation ... Install
+
+        2.8.3 create enemies
+            create an empty GameObject "Enemy" at <0,0.5,0>
+            create (child) Cube "EnemyBody" pos=<0,0.5,0>, scale=<0.5,1,0.5>
+                raised a little to make the Enemy easier to select/edit
+            create Material "Enemy" (color of my choosing)
+            drag it onto the EnemyBody
+
+        2.8.4 Bake a NavMesh
+            Ground > Add Component: NavMeshSurface
+            NaveMeshSuface >
+                Advanced > Bake = true
+                Object Collection: Current Object Hierarchy
+                Advanced > Bake = true
+                (PickUp object should now be ignored)
+
+        2.8.5 Make enemy chace the player
+            Enemy > Add Component > Nav Mesh Agent, speed = 2.5
+
+            Add EnemyMovement script, into Scripts folder
+            Enemy.Inspector: drag Player into the player slot
+
+        2.8.6 Create Obstacles
+            each a Cube GameObject, 
+            turn one into a ramp (by rotating and lowering it)
+            drag them under the Ground parent
+            Ground > Bake = true (so they become part of the surface)
+            NavMeshSurface > Agent Type > Open Agent Settings
+                adjust step height and max slope
+            play and see what the enemy can/cannot pass
+    
+        2.8.7 Create dynamic obstacles
+            create cube "DynamicBox", drag it into Prefabs
+            give it a new material
+            add RigidBody, mass=0.1
+            play and observe 
+                I can knock them over
+                enemy moves right through them
+            DynamicBox Add Component NavMesh Obstcle
+                enable Carve
+
+        2.8.8 set win/lose conditions
+            add test for Enemy hit us, and destroy if it does
+            fix CameraController to check for player=null
+            add Enemy tag to EnemyBody
+            play and confirm we disappear and lose
 
 
     2.9 Build and export the game
+        
+        2.9.2 Build Settings
+            target: Linux
+            Add Open Scenes, remove SampleScene
+            Player Settings
+                set company and product name
+                Resolution & Presentation: Fullscreen Mode -> Windowed
+            Build
+                create new folder: Builds
+                select: Rollaball in that folder, save
+                
+
+    [Note:
+        I modified the enemy and player controllers to, in update, 
+        check for Escape being entered, and exit the game.  This
+        took ifdef'd code because exiting is different in the 
+        Editor and in the Stand-Alone app.
 
     2.10 create a Game Design Document

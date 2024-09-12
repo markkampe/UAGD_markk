@@ -50,8 +50,17 @@ public class PlayerController : MonoBehaviour
      *	from within the Inspector)
      */
     private void FixedUpdate() {
-        Vector3 movement = new Vector3 (movementX, 0.0f, movementY);
-        rb.AddForce(movement * speed);
+	Vector3 movement = new Vector3 (movementX, 0.0f, movementY);
+	rb.AddForce(movement * speed);
+
+	// any time he enters Escape, the game is over
+	if (Input.GetKey(KeyCode.Escape)) {
+#if UNITY_EDITOR
+	    UnityEditor.EditorApplication.isPlaying = false;
+#else
+	    Application.Quit();
+#endif
+	}
     }
 
     /*
@@ -63,9 +72,9 @@ public class PlayerController : MonoBehaviour
      *		on button-up movementValue will be <0,0>
      */
     void OnMove( InputValue movementValue ) {
-        Vector2 movementVector = movementValue.Get<Vector2>();
-        movementX = movementVector.x;
-        movementY = movementVector.y;
+	Vector2 movementVector = movementValue.Get<Vector2>();
+	movementX = movementVector.x;
+	movementY = movementVector.y;
     }
 
     // update score display
@@ -76,6 +85,7 @@ public class PlayerController : MonoBehaviour
     /*
      * called whenever we collide with another RigidBody
      *	 if it was a PickUp, deactivate it and bump our score
+     *	 if we have gotten the last one, we win, destroy enemy
      */
     void OnTriggerEnter(Collider other) {
 	// disable any PickUp we collide with
@@ -83,8 +93,25 @@ public class PlayerController : MonoBehaviour
 	    other.gameObject.SetActive(false);
     	    count++;
 	    SetCountText();
-	    if (count >= numObjects)
+	    if (count >= numObjects) {
 	    	winTextObject.SetActive(true);
+		Destroy(GameObject.FindGameObjectWithTag("Enemy"));
+	    }
+	}
+    }
+
+    /*
+     * called whenever someone (e.g. an enemy) collides with us
+     *	  we have lost
+     */
+    private void OnCollisionEnter(Collision collision) {
+    	if (collision.gameObject.CompareTag("Enemy")) {
+	    // display "You Lose!"
+	    winTextObject.gameObject.SetActive(true);
+	    winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
+
+	    // destroy the player object
+	    Destroy(gameObject);
 	}
     }
 }
