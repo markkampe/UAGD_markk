@@ -151,9 +151,6 @@
             [I found that I was dragging in the Y axis too, so had to go back
              and reset all Y values to 0.5]
 
-        *** and I am still not sure that I understand what a Prefab is, and how
-            it differs from other GameObjects?
-
     2.6 Make object disappear when they collide w/Player sphere
 
         2.6.2 disable PickUps w/PlayerController.OnTriggerEnter 
@@ -259,6 +256,11 @@
             add Enemy tag to EnemyBody
             play and confirm we disappear and lose
 
+    [Note:
+        I modified the enemy and player controllers to, in update, 
+        check for Escape being entered, and exit the game.  This
+        took ifdef'd code because exiting is different in the 
+        Editor and in the Stand-Alone app.
 
     2.9 Build and export the game
         
@@ -272,11 +274,22 @@
                 create new folder: Builds
                 select: Rollaball in that folder, save
                 
+        2.9.3 list of other courses to consider
 
-    [Note:
-        I modified the enemy and player controllers to, in update, 
-        check for Escape being entered, and exit the game.  This
-        took ifdef'd code because exiting is different in the 
-        Editor and in the Stand-Alone app.
+        2.9.4 Submission
+            submit
+              1: description of what I did
+              2: video (or URL to), presumably of playing w/winning and losing
 
     2.10 create a Game Design Document
+        
+        This game lacks Story-line, them, art-style or unique mechanics.
+
+            Who is the player?
+            Who is the enemy?
+            What are the collectibles?
+            What are the obstacles?
+
+        see: GameDesign.txt
+
+        submission: file/URL, title, description

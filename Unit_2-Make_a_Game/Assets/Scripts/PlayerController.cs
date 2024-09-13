@@ -50,8 +50,11 @@ public class PlayerController : MonoBehaviour
      *	from within the Inspector)
      */
     private void FixedUpdate() {
-	Vector3 movement = new Vector3 (movementX, 0.0f, movementY);
-	rb.AddForce(movement * speed);
+	// if he hit space, stop us
+	if (Input.GetKey(KeyCode.Space)) {
+	    rb.velocity = Vector3.zero;
+	    return;
+	}
 
 	// any time he enters Escape, the game is over
 	if (Input.GetKey(KeyCode.Escape)) {
@@ -61,6 +64,10 @@ public class PlayerController : MonoBehaviour
 	    Application.Quit();
 #endif
 	}
+
+	// otherwise, accelerate based on current cursor input
+	Vector3 movement = new Vector3 (movementX, 0.0f, movementY);
+	rb.AddForce(movement * speed);
     }
 
     /*

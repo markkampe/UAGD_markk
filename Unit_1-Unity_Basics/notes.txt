@@ -20,7 +20,7 @@
             Record
             .webm will appear in Recording sub-directory of project
 
-1. Unity (Editor) Basics
+1A. Unity (Editor) Basics
 
     1.2 I created the project with a simple name, and put it in the phase 1 directory,
         which created the project under the phase 1 directory.  So I moved everything
@@ -88,7 +88,12 @@
         4. drag a few Prefabs into the scene
             Play, walk around, see what happens when we bump into them
 
-        1.10 DELIVERABLE: Make a recording of this play
+        They say no submission required for part A
+
+    1B Create a Balanced Primitive Structure
+
+    1B.6 Submission
+        title, description, video or media URL
 
     SUBMIT AS RECORDING
 
