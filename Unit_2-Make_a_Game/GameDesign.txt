@@ -1,0 +1,100 @@
+Game Design Document            By Mark Kampe
+
+2 - What to include
+
+    alternatives:
+        Synopsis, Objectives, Rules, Structure
+        Players, player {metrics, states, weapons}
+      * Design (Overview, Plot and Setting, Play), Marketing, Development
+
+3 - Assets
+    
+    Download and Import UCA_Game_Dev package
+      Browse through Prefabs
+        ... Characters: of many races
+        ... PickUps: keys, stars, puzzle pieces
+        ... Spheres: one glowing rock looks nasty (for enemy)
+        ... VFX: not sure, but burst and smoke might prove interesting
+
+      Browse through Materials
+        ... some of the character materials reflect a person in a room?
+        ... PickUp materials are attractive and wide ranging
+        ... not sure about Repeating, Spheres, VFX (probably go w/above)
+
+    Simple Concept
+        The Student is trying to pass all hir classes while keeping head
+        of due dates and dealing with conflicting obligations.
+
+4 - Watch other games
+
+    Super Monkey Ball
+        action/music, sound effects as Monkey follows a range of
+        complex courses, collecting rewards while avoiding bosses
+
+    Subway Surfers
+        music, sounds, patrolling cop and dog as kids try to spray trains while
+        collecting coins and jumping atop moving trains
+
+    Crossy Road
+        sounds as robots try to cross freeway with traffic, trains, and obstacles
+
+    All three very well done, putting me (even my concepts) to shame.
+
+5 - Introduction
+
+    Working Title:  Mudd Senior
+
+    Concept:
+        The Student is trying to pass all hir classes while keeping ahead
+        of constantly approaching due dates and dealing with conflicting obligations.
+
+    Genere:
+        simple Action ... requires no planning
+
+    Target Audience:
+        Mudd Seniors
+
+    Target Platform:
+        Mac, Windows, and Linux notebooks
+
+6 - Gameplay section
+
+    Controls
+        WASD/cursor motion to evade pursuit and choose goals
+        space bar to stop
+        esc to end game
+        but I need to be able to turn (to see) as well as to move
+
+    Mechanics
+
+        One collectible appears and starts  glowing, that is the one that is due
+        a due date materializes at that collectible and starts chasing
+        I have to get the goal before the due date gets me
+           If I do, the enemy disappears and a new collectible becomes due
+           If not, I disappear into a puff of smoke
+              and an opportunity to replay at same difficulty
+        along the way are other collectibles (parties and friends?)
+
+        If I beat them all, I get fireworks and a diploma
+           and an opportunity to replay at greater difficulty
+
+        difficulty:
+            enemy speed
+            easy: overhead view
+            hard: following camera view
+
+        static obstacles are the buildings on campus
+        I don't have a concept for the dynamic obstacles
+
+7 - Art and visuals
+
+    Player is a student
+    Enemy is a professor in robes and hat
+    primary Collectble is a piece of the puzzle
+    incidental collectible is a coin or jewel
+    static obstacles are campus buildings 
+
+8 - Development timeline
+
+    Jesus ... they are going to make me do this!
+

@@ -92,14 +92,48 @@
 
     1B Create a Balanced Primitive Structure
 
+    1B.2 review 3D primitives
+        plane, quad (bounded, unlike a plane) ... both render only front face
+        cube, sphere, capsule, cylinder
+
+    1B.3 tips
+        a. put all the parts under an Empty parent (for organization and movement as a group)
+        b. use exact Transform coordinates, rather than dragging, for precise placement
+        c. Rigidbody has mass, which can be adjusted for balancing
+        d. for unusual shapes, use Mesh Colliders to better represent their surfaces
+            warning: cylinders use capsule colliders
+            warning: you can stretch a sphere, but its collider will remain spherical
+
+    1B.4,5
+        create new scene
+        create plane to serve as ground
+        create an empty "structure" parent
+            create a sphere as the base
+                pos=<0,0.5,0>, scale=<5,1,5>
+                replace collider w/Mesh, provides contacts, convex
+            create cube as lever
+                pos=<0,1,0>, scale=<10,0.25,1>
+                box collier provides contacts
+                rigidbody uses gravity
+            camera pos=<5,4,-10>, rot=<0,-30,0> 
+                so I can look down at an angle
+            on right: create cylinder, mesh collider, convex
+            on left: stacked cubes
+
+        [note: until I made the base/cylinder mesh colliders convex,
+               they fell through the board and the floor.  I tried 
+               many things, and clicking convex is what fixed it]
+
     1B.6 Submission
         title, description, video or media URL
 
     SUBMIT AS RECORDING
 
-        submit the two videos as 
+        submit three videos as 
             student_flythrough.webm
             student_physics.webm
+            balance.webm
+        
 
     SUBMIT THROUGH GIT ... doesn't make sense for this project
 
