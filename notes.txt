@@ -1,0 +1,56 @@
+Getting Started
+
+    This course requires the unityhub (control center) and unity editor
+
+        # add Unity public key
+            wget -qO - https://hub.unity3d.com/linux/keys/public | gpg --dearmor | sudo tee /usr/share/keyrings/Unity_Technologies_ApS.gpg > /dev/null
+
+        # add unity hub repo 
+        sudo sh -c 'echo "deb [signed-by=/usr/share/keyrings/Unity_Technologies_ApS.gpg] https://hub.unity3d.com/linux/repos/deb stable main" > /etc/apt/sources.list.d/unityhub.list'
+
+        # update pacakge cache and install unityhub
+        sudo apt update
+        sudo apt-get install unityhub
+
+    start unityhub
+
+        - account configuration
+
+        - unity version selection/installation
+
+        - personal configuration
+
+            - open eny project
+
+              Edit > Preferences > External Tools
+                browse /usr/bin/gvim
+
+For each project
+
+    Create new project
+       w/same name as provided directory (e.g. Unit_1-Unity_basics)
+       create project in this (top level) directory
+
+Basic Editor use:
+    scroll:         move camera in/out
+
+    left click:     select GameObject
+                    after which, Toolbar tools can be applied to it
+
+    middle-click:   move camera (up/down/left/right w/mouse)
+
+    right-click:    more general PoV manipulation
+                    rotate camera (up/down/left/right w/mouse)
+                    WASD: forward, left, backwards, right
+                    QE:   down, up
+
+Making project videos
+
+    set-up
+        Window > PackageManager > Unity Registery > Recorder: Install
+        Window > General > Recorder
+            Add Recorder: Movie
+
+    make recording
+        Window > General > Recorder
+            Record          will create a .webm in project directory
