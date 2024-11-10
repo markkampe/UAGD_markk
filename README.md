@@ -13,6 +13,12 @@ To do one of the units:
  - in this top level directory
  - with the same name as the unit sub-directory (e.g. *Unit_1-Unity_Basics*)
 
+The *.gitignore* file in this directory commits only the configuration, assets
+and code created for that unit.  It ignores all of the standard libraries and
+tools that are automatically pulled (by *unityhub*) into each new project.
+When the repo is re-cloned *Unity* will automatically pull all of that stuff
+in to the recovered project.
+
 If you want to export a project from one system so that you can work
 on it on another, the easiest way to do it is:
    1. in Project window, right-click the Assets folder and select Export Package
