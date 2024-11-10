@@ -1,0 +1,143 @@
+3.1 Getting started
+    3.1.1 install
+    It was tricky to install their project because it was saved under a different 
+    version of Unity than the one I am running.  I told it to use what we had, and
+    we'll see how that works.
+
+    3.1.2 Load Audio_Outdoor_Scene, make sure audio is not muted, and play it
+        it seems strange without audio
+
+    3.1.4 what does an audio engineer do
+        diegetic sound is from the world being experienced.
+        non-diegetic is added for the audience (e.g. music)
+
+        get the right sounds (create or import) and make them sound good.
+
+        tools:
+            Wwise: spatial audio
+            Audacity: record and edit
+            Beepbox: create instrumental melodies
+
+    3.1.5   how audio works in unity
+        An Audio Listener is automatically included in a camera.
+        There is only one per scene.
+        When an audio source comes within range, it picks it up and plays it for us.
+
+        Audio Sources hold ethe sounds in the scene view, and define the range
+        at which it becomes audio and how it will be perceived.  There can be
+        many Audio Sources.
+
+        Sound can come in MPEG/mp3, Ogg Vorbis, .wav or .aiff
+
+    3.1.6
+        Sound is part of our perception of a situation, and appropriate sound
+        makes it seem real to us.
+
+        If something is behind us, a sound behind us will tell us that we need to look.
+
+    3.1.7 
+        nothing in the real world is ever actually silent, there is always some
+        background sounds, and if they are missing, the situation is less real.
+
+3.2 Create 3D sound effects
+
+    3.2.2 add a waterfall sound
+        
+        in the hierarchy, create Audio>Audio Source "Waterfall Audio"
+        drag AmbientWaterfal into its audio clip
+            (if I double-click that file in project window, I can preview the sound)
+        enable loop, because it is a continuous sound
+
+        play and hear the (constant) sound
+
+        SET SPACIAL BLEND TO 3D !!!
+        3D settings: place in cave, min=2, max=10
+        
+        play and hear sound get louder as I get closer
+
+    3.2.3 adjust the audio spread
+
+        get into range and turn from side  (not much difference twixt 0-90
+            hear the sound get louder in the nearer ear
+            set spread to 180 and there is no change
+            find a spread that seems right (need headphone)
+
+    3.2.4-6 explore logarithmic and linear rolloff
+        the former is more natural
+        the latter comes in at the max distance and then gets uniformly louder w/approach
+        play w/custom roll-off, moving the 1.0 point
+        now the sound is what the player (not the camera) hears
+
+    3.2.7 move audio listener from camera to player
+        remove the audio llistener from the camera, add it to the player
+    
+        !!! I noticed no effect (on the waterfall sound) based on different Doppler settings
+
+    3.2.8 Doppler Effect
+        in demo, music speed is proportional to forward speed, so slows when running backwards
+        
+    3.2.9 look for other sounds to add as ambient
+
+        placed classical music on the left wall
+        placed cave steps (looped, small radius) at left inside corner of pond
+        placed grass steps (looped, small radius) at right inside corner of pond
+        getting (single instance) steps to work requires they be set to loop
+
+  3.3 Add special effects to existing audio
+
+    3.3.3-4 creae reverb zone
+
+        create Audio Reverb Zone completely within cave (6-10M)
+            set ReverbPreset to Cave
+        
+        try ReverbPreset Padded Sell and Stone Corridor
+
+    3.3.5-6 Add Water Drop Sound Effect
+
+        create AudioSource, using Water Droplets, 3D, loop, linear rolloff
+            (they are quiet compared to waterfall)
+        lower priority of water droplets to 100 (vs 128 for all others)
+
+    3.3.7 add an Audio Mixer
+
+        open Audio Mixer window
+        + new Mixer "Master"
+        + add group "Water"
+
+        Waterfall, Droplet
+            Output <- Water group
+        Edit in Play to adjust volumes
+   
+        but the droplets are still very quiet compared to everything else
+
+  3.4 Your Own Soundscape
+
+        The greatest challenge is being brought in at the end of the game, not integrated
+            don't have a long time to evolve an audio plan
+            have to design sound for everything all at once
+
+    3.4.2   Create my own soundscape
+
+        Open Scene: CreativeCoreAudio/Scenes/Audio_Indoor_Scene
+
+        - identify items to which I can add audio effects
+                1. lights can buzz
+                2. foot-steps when walking?
+
+            - what is the base ambient sound
+
+                3. obviously, the fire should be crackling
+                4. the red canvas can have warm music
+                5. the blue canvas can have cold music
+
+            - which objects should make sounds
+
+                stone floor in the corners
+                soft under the sky-light
+
+        - consider the narative I want it to present
+    
+        + add now fewer than five sounds
+        + including ambient sounds
+        + including represented objects
+         at least one audio special effect
