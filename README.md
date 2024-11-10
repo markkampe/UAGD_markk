@@ -8,6 +8,11 @@ The intent is that students will fork this repo and then do the work
 in their own fork.  The expected form of a submission is a github
 URL for the (public) repo in which you have done your work.
 
+To do one of the units:
+ - create a new project
+ - in this top level directory
+ - with the same name as the unit sub-directory (e.g. *Unit_1-Unity_Basics*)
+
 If you want to export a project from one system so that you can work
 on it on another, the easiest way to do it is:
    1. in Project window, right-click the Assets folder and select Export Package
