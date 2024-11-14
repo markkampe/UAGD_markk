@@ -1,0 +1,268 @@
+Unit 4: VFX
+
+    creating visual effects using Unity's particle system
+        e.g. fire, weather, puff of smoke
+    effects are made up of multiple particle systems, each made up of individual particles
+    - a particle is usually a 2D texture w/time-changing color, scale, position
+    - emitters define the area particles come from
+
+    We will learn to start a fire that disappears into smoke.
+    We will add win/lose VFX to our Unit 2 game
+
+    Note: I found a few problems with suggested parameter values, but I eventually
+          figured out that playing with them to make it work better was better
+          teaching me what each parameter value actually meant.
+
+    Note: when you select a particle system, a particles menu appears, enable me
+          to (at view scale) play/restart/stop to get a general sense of the action
+
+    4.1 Getting started w/VFX
+
+        download project zip, unzip into project directory, add project from disk
+            and accept installed (vs original) Unity version
+
+    4.1.3 two types of VFX: Environmental and GamePlay effects
+
+    4.1.4 identify VFX
+        scene w/mist and fire
+        blue slash behind swinging staff
+
+    4.1.5 particles (sparks off a cutting disk) vs VFX graphics (glowing genie coming out of lamp smoke)
+
+    4.1.7 open and play the VFX outdoor scene
+            see the fire burning and smoke rising
+
+    4.1.8 play, pause and restart the fire effect
+
+        select fire system prefab and watch it how particle system plays
+        use the particle effect menuy to pause/play, stop, restart
+
+    4.2 Playing around w/particle system
+
+    4.2.2 in Fire_ParticleSystem_Prefab select VFX_sparks 
+            mark it active (by clicking the Inspector box left of its name)
+
+    4.2.3 in Inspector, click VFX_sparks and see what modules are enabled
+        add Color_over_Lifetime, Size_over_Lifetime, and Noise modules
+
+    4.2.4 Create a few other firepits (by duplicating)
+
+        Change the color of the point light
+        Change the gadient editor for the color over lifetime
+        enable/disable modules
+            emission:   the glowing flame, without it only sparks
+                    rate over time: how often flames change
+            shape:      much more change to shape over time
+            color over lifetime: color changes
+            size over lifetime: it is always its maximum widthy
+            noise:      much more irregular paths
+            texture sheet animation: large flames vs many small flamelets
+            renderer:   flame disappears entirely
+
+    4.3 Create an environmental particle system
+
+        Note: the little cloud-ettes we are adding in this module are
+              nowhere nearly as good as the smoke in the provided fire;
+              But, it will get us to use many of the modules associated
+              with particle generation.
+
+    4.3.2 Add and Position new Particle System
+        create new particle system: in hierarchy, right click Effects>Particle System
+        Rename FX_snow
+        Transform rotate <90,0,0>, Transform pos <0,10,0>
+        Play to observe the falling particles
+        
+    4.3.3 Configure the main module properties
+        open FX_snow in explorer, scroll down, 
+        Start Size = 0.2    ... small but visible [will be too big later]
+        Start Speed = 1     ... reasonable drift speed
+        Start LifeTime = 10  ... long enough to make the ground
+        Prewarm = true      ... so they are falling at the start
+
+    4.3.4 Configure the Shape and Emission modules
+        Module.Shape    Cone->Box   ... so they fall straight down
+                        Emit From = Volume  ... spawn anywhere
+        Scale = <10,10,1>   ... make the box bigger
+        Start Size = 0.01   ... compensate for the larger scale
+
+        Emission.Rate over time 10->50
+        [they say to raise Max Particles to clear up emmision problems, but I had none]
+
+    4.3.5 Configure the Renderer module
+
+        Module.Renderer
+            Material > Snow Material
+        select that material
+            note Shader: Universal Render Pipeline
+            note Surface Type: transparent
+            note Base Map: set to snowflake testure
+
+        Start size = 0.01   ... the snowflakes are large
+
+    4.3.6 Save your VFX as a Prefab
+
+        Drag FX_snow from hierarchy to Prefabs folder
+            note that it now turns blue in the hierarchy
+
+        deactivate FX_snow and Firepit>Point Light
+
+    4.4 Create a Burst particle
+        hierarchy>Effects>Particle System "FX_SmokeBurst"
+            [so it starts when the Smokeburst does]
+            pos=<0,0.5,0> rot=<-90,0,0>
+            Looping = false
+        play    observe 5s (slow) burst
+
+        could:    Emission.Rate Over Time = 1000, Duration = 0.05
+            but this can be done automatically
+
+        set     Emission.RateOverTime = 0
+                Emission.Bursts +
+                    at 0, 30 particles 1 cycle
+                play ... it was very fast
+                
+    4.4.2 Clear work area
+        Start Speed = 0.3       move upwards slowly
+        Shape Cone->Sphere, Radius = 0.5
+
+    4.4.3 Add a new burst of particles  ... so they don't all move at same speed
+        Start Lifetime: Random between two constants( 0.5-1.5)
+        Start Speed: Random Between two constants (0.2-2)
+
+    4.4.4 Make the particles move like smoke
+        Color over Lifetime > Gradient Editor
+            select bottom-left and bottom-right markers to set color range (blue->red)
+            select top-left and top-right makers to set opacity (bright->dim)
+
+    4.4.5 add randomness to particles
+        a texture sheet has a sequence of images through which a particle can cycle
+
+        Renderer>Material = SmokePuffMaterial
+        enable TextureSheet Animation       to step through the four images
+            tiles:  x=2, y=2        ... so it knows there are 4 figures in the picture
+            Start Frame: Random Between Two Constants(0-3)
+            cycle=3             
+                ... how many cycles it goes through during particle lifetime
+                ... they said to set it to 0.0001, which means never cycle
+                ... but it should change, so I chose 3 (x4 pix per lifetime)
+
+    4.4.6 edit color over lifetime with the Gradient Editor
+        
+        enable Size Over Lifetime
+
+    4.4.7 Edit the Renderer and Texture Sheet Anmation
+
+    4.4.8 Use a curve to change size over lifetime
+
+    4.4.9 Customize the curve
+        click the curve, go down to the Particle System curve
+        select 6th rise to flat
+        drag the right end down
+        slect left end and drag the handle up to raise mid-curve
+
+        tweak to improve appearance
+            lifetime: 1-4
+
+    4.4.10 Trigger the animation
+        [associate script with fire and objects with script]
+        drag ToggleFire Particle script onto Fire ParticleSystem_Prefab
+        drag SmokeBurst particle system onto ignige 
+             I chose not to drag it to extinguish, that didn't look right when I ran it
+        drag PointLight onto Point Light
+
+        play and observe the fire to start/stop w/space bar
+            and my smoke burst come out when a fire starts
+
+    4.4.11 Experiment with sub-emitters
+        [maybe later]
+
+    4.5 Add some magic to your scene
+    4.5.3 create some magical particles
+    4.5.4 Challenge RUles
+        make scene feel more magical
+            I like the idea of fire-flies and shooting stars
+
+        randomness in direction, lifetime, spawn rate
+            fireflies will take random paths and life-times
+            shooting stars will have random directions, but travel straight
+
+        change color over time
+            fire flies will slowly change color disappearing at the end of their lives
+            shooting stars will start out bright and fade away
+
+        + Particle System "FX_ShootingStars"
+          rot = <5,90,0>       downwards, left to right
+          pos = <-10,8,0>
+        duration = 30
+        Start size = 0.5
+        Emission: rate = 0.2, angle=10, radius=1
+        Trails: attach ribbons to trans, 
+                width/trail = 0.2es
+                ribbon count=3 (just to be safe)
+        Shape: cone, angle=20
+
+        + particle system, "FX_FireFlys"
+            pos = <10,4,0>, rot = <0, -90, 0>
+            duration = 200, speed = 1, pre-warm
+            Start color = pale blue green
+            pre-warm
+            Emission rate = 0.5
+            Force over livetime = -0.25 to 0.25 on all three axesss
+
+    4.6 Add VFX to my game
+
+        4.6.1 explosion when enemy catches player
+              boom and large explosion
+
+            effect that spawns when player pickd up a token
+            bleep and small yellow explosion
+
+        4.6.4 review asset pack in UCU Game Developer Package
+            Assets > _GameDev > Prefabs > VFX
+                VFX_Burst.prefab
+                    notes on how it works
+                ParticleSystem_SmokePuff.prefab
+                    notes on how it works
+                ParticleSystem_Snow.prefab
+                    notes on how it works
+
+    4.6.5
+        1) Add a few new AudioSources (one for each clip) under the Player in the hierarchy.
+            set them not to play on active, drag desired AudioClip into each
+                Explosion01, Power-Up01, Win01
+        2) Declare a public variable for each
+            drag the appropriate AudioSource into each
+        3) add right calls to <audio-source-variable>.Play(0) to each part of PlayerController
+
+        PlayerController
+            public GameObject pickupFX;
+            drag supplied VFX burst (no play on awake) into it
+        OnTriggerEnter
+            var currentPickupFX = Instantiate(pickupFX, other.transform.position, Quaternion.identity)
+            Destroy(currentPickupFX, 3);    // destroy it after 3 seconds
+
+        # they said to implement losing in the Player controller, but I can't play
+        # sounds and render effects if I am destroyed.  So instead I added the
+        # sound and VFX to the enemy Update when he noticed that the player was gone.
+
+        created Boom AudioSource, using Explosion01, dragged it into the boom variable
+        created SFX_explosion (copy of supplied particle explosion, but larger)
+                dragged it into the explosion sound variable
+        in Update, if player == null
+            Instantiate(explosionFX, transform.position, Quaternion.identity);
+            boom.Play(0)
+
+
+    4.6.6
+        celebratory fireworks
+            if (count >= numObjects)
+            Instantiate(victoryFX, transform.position, Quaternion.identity)
+            winMusic.Play(0)
+
+            done with snow, fireworks would be better
+        
+
+        trailing smoke that follows player as it moves
+            make the smoke VFX non-looping
+            a new GameObject to the player controller, drag in VFX_particle_smoke
+            add its instantiation to the end of PlayerController.FixedUpdate
