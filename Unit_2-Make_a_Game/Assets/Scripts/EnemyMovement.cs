@@ -14,12 +14,16 @@ using UnityEngine.AI;
 public class EnemyMovement : MonoBehaviour
 {
     public Transform player;		// configured in Inspector
+    public GameObject explosionFX;	// player object exploding
+    public AudioSource boom;		// sound of explosion
     private NavMeshAgent navMeshAgent;	// target directed AI agent
+    private bool exploded;		// player defeat announced
 
     // Start is called before the first frame update
     void Start() {
 	// get a reference to our NavMeshAgent
         navMeshAgent = GetComponent<NavMeshAgent>();
+    	exploded = false;
     }
 
     /*
@@ -28,7 +32,14 @@ public class EnemyMovement : MonoBehaviour
      */
     void Update() {
         if (player == null) {
-	    // if he has lost and hits escape, exit
+	    // if he has lost
+	    if (!exploded) {
+		Instantiate(explosionFX, transform.position, Quaternion.identity);
+		boom.Play(0);
+	    	exploded = true;
+	    }
+
+	    // when he hits escape, exit
 	    if (Input.GetKey(KeyCode.Escape)) {
 #if UNITY_EDITOR
 		UnityEditor.EditorApplication.isPlaying = false;

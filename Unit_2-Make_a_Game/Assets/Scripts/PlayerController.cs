@@ -27,6 +27,11 @@ public class PlayerController : MonoBehaviour
     public int numObjects = 0;	// TRICK: set from inspector
     public TextMeshProUGUI countText;	// score board: set from Inspector
     public GameObject winTextObject;	// win anouncement: set from Inspector
+    public GameObject pickupFX;
+    public AudioSource ching;
+    public GameObject victoryFX;
+    public AudioSource winMusic;
+    public GameObject smokeTrail;
 
     // Start is called before the first frame update
     void Start() {
@@ -68,6 +73,9 @@ public class PlayerController : MonoBehaviour
 	// otherwise, accelerate based on current cursor input
 	Vector3 movement = new Vector3 (movementX, 0.0f, movementY);
 	rb.AddForce(movement * speed);
+
+    	// drop occasional smoke trails
+	Instantiate(smokeTrail, transform.position, Quaternion.identity);
     }
 
     /*
@@ -98,11 +106,22 @@ public class PlayerController : MonoBehaviour
 	// disable any PickUp we collide with
 	if (other.gameObject.CompareTag("PickUp")) {
 	    other.gameObject.SetActive(false);
+
+	    // score celebratory burst (for 3 seconds)
+	    ching.Play(0);
+	    var currentPickupFX = Instantiate(pickupFX, transform.position, Quaternion.identity);
+	    Destroy(currentPickupFX, 3);
+
+	    // give us credit for the score
     	    count++;
 	    SetCountText();
 	    if (count >= numObjects) {
 	    	winTextObject.SetActive(true);
 		Destroy(GameObject.FindGameObjectWithTag("Enemy"));
+
+	    	// celebratory fireworks
+	    	Instantiate(victoryFX, transform.position, Quaternion.identity);
+	    	winMusic.Play(0);
 	    }
 	}
     }
@@ -117,8 +136,8 @@ public class PlayerController : MonoBehaviour
 	    winTextObject.gameObject.SetActive(true);
 	    winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
 
-	    // destroy the player object
-	    Destroy(gameObject);
+	    // destroy player (notifying enemy of his win)
+	    Destroy(gameObject, 0.5f);
 	}
     }
 }
