@@ -7,9 +7,6 @@
  * 	is a component)
  *    2 detects collisions with PickUp objects, deactivates
  *	them, and bumps the score.
- *
- * TODO:
- *	in Start, count the objects tagged as PickUp
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -21,20 +18,32 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;	// Player sphere
     private int count;		// score of PickUps collected
+    private int numObjects;	// number of objects to pick up
     private float movementX;	// last left/right acceleration
     private float movementY;	// last forwards/backwards acceleration
-    public float speed = 0;	// TRICK: set from the Inspector
-    public int numObjects = 0;	// TRICK: set from inspector
-    public TextMeshProUGUI countText;	// score board: set from Inspector
-    public GameObject winTextObject;	// win anouncement: set from Inspector
-    public GameObject pickupFX;
-    public AudioSource ching;
-    public GameObject victoryFX;
-    public AudioSource winMusic;
-    public GameObject smokeTrail;
+    private bool gameOver = false;	// we have won (or lost)
+
+    // input parameters set from Inspector
+    public float speed = 0;		// player speed
+
+    // object references ... set from explorer (rather than searched)
+    public TextMeshProUGUI countText;	// score board object
+    public GameObject winTextObject;	// You Won announcment
+    public GameObject pickupFX;		// small box burst
+    public AudioSource ching;		// pick-up box sound
+    public AudioSource winMusic;	// you won sound
+    public GameObject victoryFX;	// snow-fall
+    public GameObject smokeTrail;	// smoke particle system
+    public AudioSource backgroundMusic;	// background: set from Inspector
 
     // Start is called before the first frame update
     void Start() {
+    	// figure out how many Pick-Up items there are
+    	GameObject[] pickups;
+	pickups = GameObject.FindGameObjectsWithTag("PickUp");
+	foreach (GameObject pu in pickups)
+	    numObjects++;
+
 	// score starts out zero
 	count = 0;
 	winTextObject.SetActive(false);
@@ -55,12 +64,6 @@ public class PlayerController : MonoBehaviour
      *	from within the Inspector)
      */
     private void FixedUpdate() {
-	// if he hit space, stop us
-	if (Input.GetKey(KeyCode.Space)) {
-	    rb.velocity = Vector3.zero;
-	    return;
-	}
-
 	// any time he enters Escape, the game is over
 	if (Input.GetKey(KeyCode.Escape)) {
 #if UNITY_EDITOR
@@ -68,6 +71,12 @@ public class PlayerController : MonoBehaviour
 #else
 	    Application.Quit();
 #endif
+	}
+
+	// if we are done or he hit space, stop us
+	if (gameOver || Input.GetKey(KeyCode.Space)) {
+	    rb.velocity = Vector3.zero;
+	    return;
 	}
 
 	// otherwise, accelerate based on current cursor input
@@ -122,6 +131,9 @@ public class PlayerController : MonoBehaviour
 	    	// celebratory fireworks
 	    	Instantiate(victoryFX, transform.position, Quaternion.identity);
 	    	winMusic.Play(0);
+
+		// turn off game activities
+		shutDown();
 	    }
 	}
     }
@@ -136,8 +148,23 @@ public class PlayerController : MonoBehaviour
 	    winTextObject.gameObject.SetActive(true);
 	    winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
 
+	    // turn off game activities
+	    shutDown();
+
 	    // destroy player (notifying enemy of his win)
 	    Destroy(gameObject, 0.5f);
 	}
+    }
+
+    /*
+     * called when game is over (win or lose)
+     *	      shut down music and player motion
+     */
+    private void shutDown() {
+    	// stop the background music
+	backgroundMusic.Stop();
+
+	// disable further player motion
+	gameOver = true;
     }
 }
