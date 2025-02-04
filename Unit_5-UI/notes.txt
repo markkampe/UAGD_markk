@@ -80,6 +80,9 @@ of these things when I need them.
     double-click hierarchy>Canvas to highlight the entire canvas
     in scene, select 2D to get the simplest (no perspective) view of the (2D) canvas
 
+    For Screen Space objects, 2D is the obvious display mode, since the canvas is
+    a 2 dimensional object, in front of you where ever you are looking.
+
  =========  THE FOLLOWING IS CRITICAL TO MAKING UI TEXT ADAPT TO SCREEN SIZE =========
  5.3.3 Aspect Ratio
 
@@ -305,3 +308,41 @@ of these things when I need them.
             object = Enemy
             action = EnemyMovement.SetSpeed() w/values 0.75-3.0
 
+5.8 move U/I into World Space
+    (e.g. if you want an in-game control panel)
+
+5.8.3
+    Create a copy we can work on
+        in the Project window, navigate to the current scene, select it, type ^D
+        rename the new scene (e.g. World_UI_Scene)
+        open that scene
+
+    change Canvas Render Mode to World Space"
+        note Screen Space Camera is at a fixed position relative to camera
+
+    drag Main Camera into the Render Mode Event Camera field
+    (it will disappear from Game screen, but that is because it is now huge)
+
+    move pos to <0, 0, 0>, reduce scale to <0.03, 0.03, 0.03>
+
+    (it may be behind the camera, so you have to go into 3D mode to be able
+     to properly position world-space objects)
+
+    activate the Settings menu, move it to <0,0,0> and then adjust it onto a wall
+
+    play to observe that 
+        both are now in a fixed position in the world
+        you can still click and use any of the widgets
+
+5.8.4
+    add new toggle and slider (for fire/brightness) to the settings menu
+    add new buttons (for Day/Night) to settings menu
+
+    If I want the Buttons to be white text on semi-transparent button,
+       I need to set the button color to be low alpha
+
+
+5.8.5
+    a) Fire Toggle -> Particle System Renderer.Enable ... trivial
+    b) Fire slider brightness ... seems to require a script, not w/direct action
+    c,d) Directional Light -> LightIntensity (0.7, 0.3)
