@@ -18,11 +18,17 @@ public class EnemyMovement : MonoBehaviour
     public AudioSource boom;		// sound of explosion
     private NavMeshAgent navMeshAgent;	// target directed AI agent
     private bool exploded;		// player defeat announced
+    private float newSpeed;		// chosen enemy speed
 
     // Start is called before the first frame update
     void Start() {
 	// get a reference to our NavMeshAgent
         navMeshAgent = GetComponent<NavMeshAgent>();
+	float initSpeed = navMeshAgent.speed;
+	if (newSpeed != 0) {
+	    Debug.Log($"NavAgetnt speed = {initSpeed} -> {newSpeed}");
+	    navMeshAgent.speed = newSpeed;
+	}
     	exploded = false;
     }
 
@@ -49,5 +55,13 @@ public class EnemyMovement : MonoBehaviour
 	    }
 	} else
 	    navMeshAgent.SetDestination(player.position);
+    }
+
+    /*
+     * set the enemy's persuit speed
+     * @param units	max pursuit speed (pixels/update)
+     */
+    public void SetSpeed(float units) {
+	newSpeed = units;
     }
 }
