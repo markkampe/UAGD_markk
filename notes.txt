@@ -31,7 +31,7 @@ For each project
        w/same name as provided directory (e.g. Unit_1-Unity_basics)
        create project in this (top level) directory
 
-Basic Editor use:
+Basic Editor (Scene View) use:
     scroll:         move camera in/out
 
     left click:     select GameObject
