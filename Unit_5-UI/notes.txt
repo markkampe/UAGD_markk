@@ -1,0 +1,307 @@
+There is a lot of critical and detailed information in this section, for how
+to control the many and adaptive aspects of U/I widgets.  When I get serious
+about these, I will need to review this carefully to be able to control all
+of these things when I need them.
+
+5.0 Getting started w/User Interfaces
+
+    A UI can be in Screen Space or in World Space (canvas render mode)
+    - The former shows up on the display, but is not an object in the world.  
+      Common examples might be messages and scores.
+      + Screen space Overlay is on top of the screen, no matter what is behind it
+      + Screen Camera Camera is some distance from camera, and moves with it
+    - A World Space U/I can move, rotate, has size.  It could U/I elements that
+      can be interacted with, or displays that follow characters.
+
+    After the basics of this module, we will:
+    1. add a play button to activate our game
+    2. add a title element that disappears when the game starts
+
+    Mechanics
+        Every UI requires, as its parent, a Canvas object
+            its rendermode can be:
+                Screen Space - Overlay (always same place on the screen)
+                Screen Space Camera (associated with a particular one)
+                World Space
+        Every interactable U/I requires an EventSystem to handle buttons/toggles etc.
+
+        a TextMeshPro gives us control over Fonts, stiles, size, coloring and spacing
+        a Button has shape and color, and an OnClick() event handler
+        a checkbox has a boolean ValueChanged event
+        a slider has a float ValueChanged event
+
+5.1.6   download creativecore-ui-2022.3LTS.zip
+        unzip it into Unit_5-UI directory
+        Unity Hub add project from disk
+        open project (don't sweat editor version complaints)
+        navigate to Assets > CreativeCore_UI > Scenes
+            double-click TutorialScene_UI_Outdoor
+
+5.1.7   add a few more prefabs to personalize the scene
+        duplicate another street lamp
+        drag in the fire VFX
+
+5.1.8   choose a Unity UI system
+        uGUI ... the basic and most common
+        Immediate Mode GUI ... programmer debugging interfaces, not UIs
+        UI Toolkit ... will eventually replace uGUI
+
+5.2.1   look at some samples (label text, flashy game titles)
+
+5.2.2   add and center title text
+        Hierarchy (right click) UI > Text TextMeshPro  
+            will automatically create Canvas for it
+            instructions said move it to <0,0,0>
+                it will look wrong in editor, but be centered during play
+                I guess this is because it is, by default, screen (vs world) coordinates
+            name = "Title text"
+
+5.2.3 Customize title text
+    change text to "The Best Title"
+    I set alignment to Center, disable Wrapping
+    tweak Font{Asset, Size, Style} Vertex Color
+
+5.2.4 Accessibility (size, color, font, etc)
+
+5.2.5 Download & import new fonts
+
+    browse google fonts and find something I like (a bunch of Roboto)
+    download the otf/ttf file
+    Assets>Import
+    Window>TextMexhPro>Font Asset Creator
+        assign Source font file
+        Generatee Atlas
+        Save
+    now I can choose the new font
+
+ 5.3.2 Arange the Editor for working with UI
+
+    layout (upper right corner): 2x3 to put Scene and Game on same screen
+    double-click hierarchy>Canvas to highlight the entire canvas
+    in scene, select 2D to get the simplest (no perspective) view of the (2D) canvas
+
+ =========  THE FOLLOWING IS CRITICAL TO MAKING UI TEXT ADAPT TO SCREEN SIZE =========
+ 5.3.3 Aspect Ratio
+
+    in Game View, select "Free Aspect" (I can change it)
+    Adjust the size of the Game View window (at top and right edges) and see aspect ratio change
+        notice that I can so mis-size it that the text no longer fits.
+    Game View > 16:9, 16:10 ... the standard for HD screens
+        notice that the canvas now automatically re-sizes to match game window size
+
+ 4.3.4 Add Settings Button in corner
+    Hierarchy + UI > Button - TextMeshPro
+    rename it to Settings Button
+    drag the Button (not merely the text) to some corner
+    change text to be Settings
+    change it to use the same font as the title
+
+5.3.5 Anchors
+    note that if I change the aspect ratio again, the button is no longer in the corner
+        this is because it is positioned relative to the center of the screena
+
+5.3.6 Move anchor to the near corner
+    select the Settings button (the anchor will light up)
+    drag the center of the anchor to the corner nearest the text
+
+    note that changing the window size leaves the button in the corner
+
+    I could also have done this by selecting the Settings Button and then
+      (in the inspector) clicking the anchor presets box, which would 
+      allow me to select a bunch of (non-arbitrary) anchor positions.
+
+5.3.7 Pivot points
+
+    there is, in the Anchor Presents window an option to 
+        Shift:  also set pivot
+        ALt:    Also set position
+
+5.3.8 Canvas Scaling
+
+    note that the text size does not scale with the window size
+
+    select Canvas, note Canvas scaler component: UI Scale Mode = Constant
+    change it to Scale with Screen Size
+    note that re-sizing window leaves text with same relative screen fraction
+
+    under Screen Match Mode I can adjust the fraction of the screen it takes up
+
+=========== INTERACTIVE U/I ELEMENTS =======
+  In previous (VR) problems I have created scripts to associate with control
+  actions.  But standard U/I widgets (check boxes, sliders, etc) have some
+  basic functionality that can be configured in the inspector:
+    each (addable) OnClick()/OnValueChange/...  action has:
+        an assocaited GameObject, Renderer, Transform or Image
+            with each of those comes a long list of possible methods
+            each of which has appropriate parameters
+    So we:
+        1) add an actionn
+        2) choose a target class and method
+        3) adjust the parameters for that invocation
+
+
+5.4 Create a menu background with images
+
+5.4.2 Add basic settings background
+    
+    deactivate Title Text and Settings Button (simplify my screen)
+
+    add UI > Image, rename it Settings Menu
+    resize it to be a tall menu rectangle
+    [Inspector] color = blue-grey, Alpha = 128 (semi transparent)
+    under settings menu UI > Text (TMP),    name="Settings Text"
+
+5.4.3 Add a Settings Title
+    
+    select Settings Menu, + UI > Text - TextMeshPro,    name="Settings Text"
+    set text = Settings, set font
+
+5.4.4 Create simple Exit Button
+
+    select Settings Menu + UI > Button - TextMeshPro, name="Exit Button"
+    set text = "X", set font
+    move its anchor to upper right corner of settings menu
+
+5.4.5 Choose a 9-sliced image
+
+    Selecte the X button
+    under Image, selecte a different source image
+    adjust the color of the button (and the text to complement it)
+
+5.5 Add basic Button Functionality
+
+    when you hover over an interactible object, it should respond to that, 
+    perhaps by changing its background color, to acknowledge you can now
+    select it.  And there should be a further change when you actually 
+    select that widgit.
+
+5.5.3 Edit Button Transition Colors
+
+    select Settings Button
+    Transition = Color Tint
+    choose a Highlighted Color
+
+    play and observe its effect
+
+5.5.4 add an action to On Click event
+    goals:  clicking settings button brings up settings menu
+            clicking x button causes us to exit
+
+    deactivate Settings Menu
+    select Settings Button
+        On Click, + add new action
+
+5.5.5 make settings menu appear on button click
+
+    1) drag "Settings Menu" from hierarchy onto the new actions object
+    2) function = GameObject > SetActive (bool)
+    3) check bocks in Settings Menu (we are going to turn it ON)
+
+    run game, observe that clicking settings box now pops up settings menu
+
+5.5.6 make title screen disappear on button click
+
+    select Settings Button
+    add two more On-click action
+        object = Title Text, setActive=false
+        object = Settings BUtton, setActive=false
+
+    run game, observe clicking buton removes both objects
+
+5.5.7 Exit button navigates back to Title Screen
+
+    Select Exit Button
+    Add three actions
+        Title Text, GameObject Set Active True
+        Settings Button, GameObject Set Active True
+        Settings Menu, GameObject Set Active False
+
+
+    run game and observe switch back and forth
+
+5.6 Add Toggles and Sliders
+
+5.6.2   add music toggling
+
+    hide title, activate settings menu (to work on it)
+    add UI > Toggle     name="Music Toggle"
+    select Toggle, delete label, then add UI > Text - TextMeshPro
+        resize and position it appropriately
+        Text = Music
+
+5.6.3  add an audio source
+    + Audio > Audio Source
+      Audio Clip ... select something
+      volume = .3
+      [enabled, play on Awake
+
+5.6.4 make toggle functional
+    select toggle
+    isOn
+    onvaluechanted(boolean) -> Audio > enabled
+
+5.6.6 add volums slider
+    + UI > Slider
+        + UI TMPRO
+            size, position, text=Volume
+
+5.6.7 make slider functional
+    select slider
+    OnValueChanged (Single) + event
+        obj = audio source, action = Audio Source > volume
+        set default value
+
+5.7 we will be adding, to our game, 
+    a pay button that activates the game
+    a title text element that disappears after you start the game
+
+    Go back the (unit 2) game
+
+5.7.5   
+      add a TMPro to the Canvas, name=Title
+      position it well
+
+      add Play Button
+         OnClick
+            Title Text SetActive False
+            Play Button SetActive False
+            Quit Button SetActive False
+
+            Player PlayerInput.Enable True
+            Enemy  EnemyMovement.Enabled True
+
+5.7.6
+      add Quit Button
+            create a Quit.cs script ... 
+                with a public exit() method
+                have to add separate code for app vs editor play
+                
+            create an empty Quitter object, add it to the top level hierarchy
+                (not under the Canvas)
+            add call to the quitter's exit method as a push button action
+            also calls to disable the title, buttons and count displays
+
+        add UI Image, name=settings menu
+        change play and quit to disable settings canvas
+            add music Toggle
+            add volume slider
+            add enemy speed caption and (slow, medium, fast) buttons
+            add X button ... action to disable Settings Menu
+        add settings button to enable settings canvas
+            disable settings canvas by default
+
+     add audio source, update it from enable and buttons
+        add Music Source, volume ~.45 [active, play on wakeup]
+        add Music Toggle, isOn = false
+            onvaluechanted(boolean) -> Audio > enabled
+
+        add Volume Slider, 
+            onValueChanged = AudioSource.volume
+
+    add public SetSpeed(float) method to EnemyMovement.cs
+        on-start up, if that is non-zero, update navMesh speed accordingly
+
+        for slow, med, fast buttons:
+            object = Enemy
+            action = EnemyMovement.SetSpeed() w/values 0.75-3.0
+
