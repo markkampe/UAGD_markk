@@ -24,11 +24,15 @@ public class EnemyMovement : MonoBehaviour
     void Start() {
 	// get a reference to our NavMeshAgent
         navMeshAgent = GetComponent<NavMeshAgent>();
+
+	// if user has chosen a speed, switch to it
 	float initSpeed = navMeshAgent.speed;
 	if (newSpeed != 0) {
-	    Debug.Log($"NavAgetnt speed = {initSpeed} -> {newSpeed}");
+	    // Debug.Log($"NavAgetnt speed = {initSpeed} -> {newSpeed}");
 	    navMeshAgent.speed = newSpeed;
 	}
+
+	// we have not yet been destroyed
     	exploded = false;
     }
 
