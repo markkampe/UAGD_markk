@@ -1,0 +1,52 @@
+6 Animation
+
+6.1 a feature about a very sick daughter that made me cry
+
+    we will do some simple animation
+    and the create an animated enemy for our game
+
+    Download CreativeCore_Animation_2022.3LTS.zip
+    install its contents in Unit_6-Animation
+    add project from disk
+
+    Open TutorialScene_Animation_Outdoor
+    Open Window > Animation > Animation
+    Drag that new tab into the lower half of the editor
+
+6.2 Create first 3D animations
+
+6.2.1 There imported and in-editor animations
+    any GameObject or component can be animated
+    materials can change over time, lights can go on/off, scripts can be triggered
+
+6.2.2 Create an Animation Clip
+    select Ball object
+    in Animation tab (on bottom) ... Create "Ball_Pulse"
+
+    note tht I can now:
+        Add Property
+        Select a Clip view/edit
+
+6.2.3 Set the animation keyframes
+    key frames represent key poses
+    in-between (tween) frames will connect them ... can be done by tool
+
+    Add Property, dropdown to Transform.Scale, +
+
+    note two diamonds appear at start and end of time-line 
+        enabling me to loop between two poses
+
+    now we want to change one of the frames
+        select Record
+        select 0.25 mark
+        increase size of the ball (R, drag)
+            (note it is difficult to get all 3 axes the same)
+
+    press Play to watch it happen
+
+    Drag the top diamond from 25->30
+
+    deactivate recording mode
+
+>>> months later I could not find my place or figure out how to resume,
+>>> so I went on to Unit 7: Shaders

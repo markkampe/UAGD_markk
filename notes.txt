@@ -25,6 +25,22 @@ Getting Started
               Edit > Preferences > External Tools
                 browse /usr/bin/gvim
 
+Selecting Lessons
+
+    learn.unity.com
+        Pathways -> Creative Core
+        go straight to: https://learn.unity.com/pathway/creative-core
+
+        3: Creative Core Audio                      completed, good
+        4: Creative Core VFX                        completed, good
+        5: Creative Core UI                         completed, good
+        6: Creative Core: Animation                 3/4 completed, complex
+        7: Creative Core: Shaders and Materials     3/4 completed, complex
+        8: Creative Core: Lighting                  not yet started
+
+    Note that when I reinsalled a new editor version, I lost all of my
+        official completion status
+
 For each project
 
     Create new project

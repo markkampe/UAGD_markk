@@ -1,0 +1,199 @@
+7. Shaders and Materials
+
+    [it has been many months since I worked on this, and so it took me a while to find the
+     tutorial entry point on learn.unity.com.  But eventually I found by searching for 
+     tutorials on "shaders"]
+
+7.4 Welcome to the Gallery  (getting started)
+
+    dowload the project, unzip it into the appropriate repo subdir
+
+    install an appropriate (6.0) Unity editor (newer than that with which project was saved)
+
+    add the project to UnityHub ... first open very slow due to need for script compillations
+
+    go to the Tutorial Scene, in the hierarchy double-click the Banana object
+    observer the colored objects (bananas, apples, pears, cups, ...)
+
+7.5 My work of Art  (widget control)
+
+    7.5.1 scene menu bar, far right, Gizmos
+        I can drag 3D brightness down to remove that distraction [not sure what they are for yet]
+
+    7.5.2 scene menu bar, far left, Grid View
+        I can enable/disable grid lines in each plane
+
+7.6 Explore Meshes and Rendering
+
+    shaders and materials define how meshes will be rendered
+
+    7.6.2 scenes menu bar, middle rendering mode: wire frame draw mode
+          now look at the various objects, see their triangles
+
+    7.6.3 what is a mesh
+
+        a collection of 2D polygons defined by vertices in 3D space
+            but these would render as faceted faces
+        the vertices/polygons also have "normals" (perpendicular to the face)
+            which can turn a flat 2D face into a curved face (enabling smoothing)
+
+        a shader interprets the vertices and normals for rendering
+
+        simple meshes (like a cube) can be done by hand
+        more complex (e.g. curved) surfaces are created with tools (e.g. Blender)
+
+    7.6.4 Mesh Filter and Renderer Components
+
+        select an apple, note it has two sub-objects: Body and Stem
+        select the body, see that it has a MeshFilter and a MeshRenderer
+            the MeshFilter is a collection of connected polygons (the shape)
+            the Renderer has a Material, Lighting, Probes, and Settings
+
+    7.6.5 apply a material in the Renderer
+        select a not-yet-colored apple
+        select the AppleBody sub-component
+        note the Material is PlainWhite
+        click the Element 0 selector, and select the AppleRed material
+        I can then go down to the (newly added) Material and see its attributes
+
+7.7 Exploring Shaders
+
+    A shader renders an object made of a material onto a 2D screen
+
+    7.7.2 there are Fragment and Vertex shaders
+
+        fragment shaders produce the pixels for a surface under the ambient light
+
+        vertex shaders (more complex) tweak the locations of vertices
+
+    7.7.3 Physically based shaders and rendering
+
+        we now have enough computer power to do physics-based ray tracing
+        light has brighness, color and range
+        surfaces have color, reflectivity and a few other such attributes
+        this enables very realistic, light sensitive rendering
+            
+        there are also non-physics based renderers which simply use material characteristics
+        these are suitable for cartoons
+
+    7.7.4 Shaders in the Universal Render Pipeline
+
+        "Lit" shaders are responsive to ambient light
+        "Unlit" shaders do not, they are cheaper and appropriate for some stylinzed effects
+
+        select a (yellow) lemon and expand the material
+        open up the shader sub-menu
+            see all of the available URP shaders
+            there are many, each optimized for particular objects/situations
+            we are using URP>Lit shader
+
+    7.7.5 Explore Shaders
+        
+        look at other games and see what shaders others have used
+
+7.8 Manage Materials in a Project
+
+    Shaders do most of the work, but Materials define the attributes (e.g. color
+    and smoothness) the shaders use.  Hence, most of what we do will be in the Materials
+
+7.8.3 Fix Magenta Materials
+
+    It is common to import materials that were intended for use with shaders from
+    a different pipeline.  When the shader is not available, the material renders
+    in magenda.
+
+    Fix the magenta lemon
+        select the object, open up the material, change Shader to be URP>Lit
+
+    more general repairs
+        Window > Rendering > Render Pipeline Converter
+        make sure "Built-in to URP" is selected
+        enable "Material Upgrade" option
+        select initialize and covert
+            Material Upgrade should show "Conversion Completed"
+            I can click a list of the converted materials
+            [it was not obvious to me how it decided to fix these]
+
+7.8.4 Observe Default Material
+
+    create and place a new sphere
+    note its Material (None) and Material (Lit)
+    search Materials to find AppleRed
+
+7.8.6 Apply Material to a Game object
+
+    a) drag material to the objcect in the Scene
+    b) drag material into the material in the inspector window
+    c) in inspector window, click the circle-dot and select desired material
+
+7.8.7 Change Material
+
+    select an AppleBody
+    view material in the inspector window
+    go to its basemap
+    select a different color
+    ... all the AppleRed objects will change
+
+7.8.8 Locate Material on Game Object
+
+    select object
+    select material
+    in Project window, rename (for its new color)
+
+    I stopped at this point
+
+7.9 Simulate Solid Surfaces
+
+    when light hits an object it can reflect, pass through, or be absorbed
+
+    specular reflection is the color of the incoming light
+    diffuse reflection is partial absorbtion, and can be a different color
+
+    albedo characterizes the diffuse reflection
+
+    specularity is the degree of specular vs diffuse reflection
+        we call this metalicity ... higher metalicity reflects from more angles
+        smootheness is a uniformity/brightness of the reflection
+
+    work flow mode can be set to Metalic or Specular
+
+    specular:
+        as it becomes smoother, the object takes on the specular (rather than base) color
+
+    metalic:
+        smootheness controls glossiness, the focus (tight/diffuse) of the reflected light
+
+    play with these attributes to get the surface/reflection you want
+
+7.9.8   Create a new Material
+
+    Pick a few items in the room, and try to reproduce their color/reflectivity
+
+7.10 Map Materials with Textures
+
+    Maps are 2D images to wrap around an object, e.g. to apply colors to it
+
+    a texture can be any image (e.g. png, jpeg)
+        they can have channels (e.g. RGB)
+        fourth chanel (alpha) might be transparency
+           or smootheness, or metalicity, etc
+
+    they can be created (e.g. w/Blender) or purchased
+
+    select a provided texture (plastic albedo)
+        (in inspector) look at its R,G,B,A components
+
+    drag a texture into box at left side of a material's basemap
+        or click that circle to get a menu of available textures
+
+===== THE STUFF THAT FOLLOWS IS PRETTY IMPORTANT, BUT DEEPER THAN I CARED TO GO TODAY
+
+7.10.5 tiling
+
+7.11 Create Translucent and Transparent Effects
+
+7.12 Add Physical Texture with Bump Mapping
+
+7.13 Refine Surfaces with more Texture Maps
+
+7.14 Get Started with Shader Graph
